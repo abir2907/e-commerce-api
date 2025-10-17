@@ -24,7 +24,7 @@ const registerController = async (req, res) => {
     userRole: user.role,
   };
 
-  const token = await jwt.sign(tokenUser, process.env.JWT_SECRET, {
+  const token = jwt.sign(tokenUser, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_LIFETIME,
   });
   res.status(StatusCodes.CREATED).json({ user: tokenUser, token });
