@@ -1,7 +1,7 @@
 const User = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
-const jwt = require("jsonwebtoken");
+const { createJWT } = require("../utils");
 
 const registerController = async (req, res) => {
   const { name, email, password } = req.body;
@@ -24,9 +24,8 @@ const registerController = async (req, res) => {
     userRole: user.role,
   };
 
-  const token = jwt.sign(tokenUser, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_LIFETIME,
-  });
+  const token = createJWT({ payload: tokenUser });
+
   res.status(StatusCodes.CREATED).json({ user: tokenUser, token });
 };
 
