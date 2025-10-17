@@ -20,7 +20,7 @@ const errorHandlerMiddleware = require("./middleware/error-handler");
 
 app.use(morgan("tiny"));
 app.use(express.json());
-app.use(cookieParser());
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.get("/", (req, res) => {
   res.send("<h1>API</h1>");
@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
 
 // for testing
 app.get("/api/v1", (req, res) => {
-  console.log(req.cookies);
+  console.log(req.signedCookies);
   res.send("<h1>COOKIES</h1>");
 });
 
