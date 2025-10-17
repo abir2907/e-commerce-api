@@ -6,6 +6,7 @@ const app = express();
 
 // rest of the packages
 const morgan = require("morgan");
+const cookieParser = require("cookie-parser");
 
 // database
 const connectDB = require("./db/connect");
@@ -19,9 +20,16 @@ const errorHandlerMiddleware = require("./middleware/error-handler");
 
 app.use(morgan("tiny"));
 app.use(express.json());
+app.use(cookieParser());
 
 app.get("/", (req, res) => {
   res.send("<h1>API</h1>");
+});
+
+// for testing
+app.get("/api/v1", (req, res) => {
+  console.log(req.cookies);
+  res.send("<h1>COOKIES</h1>");
 });
 
 app.use("/api/v1/auth", authRouter);
