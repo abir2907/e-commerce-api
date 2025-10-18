@@ -20,6 +20,13 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
+const authorizePermissions = (req, res, next) => {
+  // should only be accessible by admin
+  console.log("admin route");
+  next();
+};
+
 module.exports = {
   authenticateUser,
+  authorizePermissions,
 };
