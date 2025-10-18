@@ -59,7 +59,12 @@ const loginController = async (req, res) => {
 };
 
 const logoutController = async (req, res) => {
-  res.send("Logout User");
+  // remove cookie from the browser
+  res.cookie("token", "logout", {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+  });
+  res.status(StatusCodes.OK).json({ msg: "user logged out" });
 };
 
 module.exports = {
