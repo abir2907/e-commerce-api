@@ -12,18 +12,8 @@ const authenticateUser = async (req, res, next) => {
     // isTokenValid returns the payload that we signed
     // Remeber, we used a tokenUser as a payload
     // Therefore, we are getting the signed in user in our payload
-    const payload = isTokenValid({ token });
-    console.log(payload);
-    /* Sampple log: 
-      (below are the details of the logged in user accessing our route)
-      {
-        userId: '68f34a1eae9576f644d10841',
-        userName: 'steve', 
-        userRole: 'user',
-        iat: 1760795227,
-        exp: 1763387227
-      }
-    */
+    const { userName, userId, userRole } = isTokenValid({ token });
+    req.user = { userName, userId, userRole };
     next();
   } catch (error) {
     throw new CustomError.UnauthenticatedError("Authentication Invalid");
