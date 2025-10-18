@@ -12,8 +12,8 @@ const authenticateUser = async (req, res, next) => {
     // isTokenValid returns the payload that we signed
     // Remeber, we used a tokenUser as a payload
     // Therefore, we are getting the signed in user in our payload
-    const { userName, userId, userRole } = isTokenValid({ token });
-    req.user = { userName, userId, userRole };
+    const { name, userId, role } = isTokenValid({ token });
+    req.user = { name, userId, role };
     next();
   } catch (error) {
     throw new CustomError.UnauthenticatedError("Authentication Invalid");
@@ -22,7 +22,7 @@ const authenticateUser = async (req, res, next) => {
 
 const authorizePermissions = (...roles) => {
   return (req, res, next) => {
-    if (!roles.includes(req.user.userRole)) {
+    if (!roles.includes(req.user.role)) {
       throw new CustomError.UnauthorizedError(
         "Unauthorized to access this route"
       );

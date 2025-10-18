@@ -49,8 +49,8 @@ const loginController = async (req, res) => {
 
   const tokenUser = {
     userId: user._id,
-    userName: user.name,
-    userRole: user.role,
+    name: user.name,
+    role: user.role,
   };
 
   attachCookiesToResponse({ res, user: tokenUser });
