@@ -1,7 +1,7 @@
 const User = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
-const { attachCookiesToResponse } = require("../utils");
+const { attachCookiesToResponse, createTokenUser } = require("../utils");
 
 const registerController = async (req, res) => {
   const { name, email, password } = req.body;
@@ -18,11 +18,7 @@ const registerController = async (req, res) => {
   const user = await User.create({ name, email, password, role });
 
   // This will be the payload of our jwt token
-  const tokenUser = {
-    userId: user._id,
-    userName: user.name,
-    userRole: user.role,
-  };
+  const tokenUser = createTokenUser(user);
 
   attachCookiesToResponse({ res, user: tokenUser });
 
@@ -47,11 +43,7 @@ const loginController = async (req, res) => {
     throw new CustomError.UnauthenticatedError("Invalid Credentials");
   }
 
-  const tokenUser = {
-    userId: user._id,
-    name: user.name,
-    role: user.role,
-  };
+  const tokenUser = createTokenUser(user);
 
   attachCookiesToResponse({ res, user: tokenUser });
 
