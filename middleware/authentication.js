@@ -22,7 +22,11 @@ const authenticateUser = async (req, res, next) => {
 
 const authorizePermissions = (req, res, next) => {
   // should only be accessible by admin
-  console.log("admin route");
+  if (req.user.userRole !== "admin") {
+    throw new CustomError.UnauthorizedError(
+      "Unauthorized to access this route"
+    );
+  }
   next();
 };
 
