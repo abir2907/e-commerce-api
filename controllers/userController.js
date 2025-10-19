@@ -8,7 +8,6 @@ const {
 } = require("../utils");
 
 const getAllUsers = async (req, res) => {
-  console.log(req.user);
   const users = await User.find({ role: "user" }).select("-password");
 
   if (!users) {
@@ -19,7 +18,6 @@ const getAllUsers = async (req, res) => {
 };
 
 const getSingleUser = async (req, res) => {
-  console.log(req.user);
   const user = await User.findOne({ _id: req.params.id }).select("-password");
 
   if (!user) {
