@@ -30,6 +30,10 @@ const UserSchema = mongoose.Schema({
 });
 
 UserSchema.pre("save", async function () {
+  // Using user.save() will invoke this, so check if we need to hash password
+  // If we are not modifying the password, then do not hash the password again
+  // as then we won't be able to login even with correct password
+  if (!this.isModified("password")) return;
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
