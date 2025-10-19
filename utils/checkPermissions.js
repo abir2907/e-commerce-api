@@ -1,9 +1,11 @@
 const CustomError = require("../errors");
 
 const checkPermissions = (requestUser, resourceUserId) => {
-  // If the user making the getSignleUser request is not an admin,
-  // Then we don't want that user to see other users using their id
-  // Admin can get every user, but the user should only be able to see himself using his id, and not anyone else
+  // This function checks if either the user making this request
+  // is an admin or if the requesting user and the resource user
+  // are the same, in both cases it is safe so we return
+  // In other case we throw unauthorized error, since other user
+  // should not be able to access some other user's resources
 
   if (requestUser.role === "admin") return;
   if (requestUser.userId === resourceUserId.toString()) return;
