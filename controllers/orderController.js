@@ -111,7 +111,7 @@ const updateOrder = async (req, res) => {
 
   order.paymentIntentId = paymentIntentId;
   order.status = "paid";
-  order.save();
+  await order.save();
 
   res.status(StatusCodes.OK).json({ order });
 };
