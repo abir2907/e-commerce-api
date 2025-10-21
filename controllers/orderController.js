@@ -31,8 +31,24 @@ const createOrder = async (req, res) => {
     }
 
     const { name, price, image, _id } = dbProduct;
-    console.log(name, price, image);
+
+    const SingleOrderItem = {
+      amount: item.amount,
+      name,
+      price,
+      image,
+      product: _id,
+    };
+
+    // add item to order
+    orderItems = [...orderItems, SingleOrderItem];
+
+    // calculate sub total
+    subtotal += item.amount * price;
   }
+
+  console.log(orderItems);
+  console.log(subtotal);
 
   res.send("create order");
 };
