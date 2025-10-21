@@ -48,10 +48,6 @@ app.use(mongoSanitize());
 app.use(express.static("./public"));
 app.use(fileUpload());
 
-app.get("/", (req, res) => {
-  res.send("<h1>API</h1>");
-});
-
 // for testing
 app.get("/api/v1", (req, res) => {
   console.log(req.signedCookies);
