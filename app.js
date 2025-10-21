@@ -1,5 +1,6 @@
 require("dotenv").config();
 require("express-async-errors");
+const path = require("path");
 
 // extra security packages
 const helmet = require("helmet");
@@ -48,10 +49,9 @@ app.use(mongoSanitize());
 app.use(express.static("./public"));
 app.use(fileUpload());
 
-// for testing
-app.get("/api/v1", (req, res) => {
-  console.log(req.signedCookies);
-  res.send("<h1>COOKIES</h1>");
+// Serve documentation at root
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 app.use("/api/v1/auth", authRouter);
