@@ -13,7 +13,6 @@ const express = require("express");
 const app = express();
 
 // rest of the packages
-const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 
@@ -31,7 +30,6 @@ const orderRouter = require("./routes/orderRoutes");
 const notFoundMiddleware = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 
-app.use(morgan("tiny"));
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.set("trust proxy", 1);
